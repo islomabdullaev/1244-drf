@@ -12,4 +12,8 @@ class BookSerializer(serializers.Serializer):
         return Book.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
+        instance.title = validated_data.get("title", instance.title)
+        instance.description = validated_data.get("description", instance.description)
+        instance.is_active = validated_data.get("is_active", instance.is_active)
+        instance.save()
+        return instance
