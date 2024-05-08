@@ -47,3 +47,11 @@ def book_detail(request, pk):
             "message": "Deleted Successfully !"
         }
         return Response(data=content, status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == "PATCH":
+        serializer = BookSerializer(instance=book, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
